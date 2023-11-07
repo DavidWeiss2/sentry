@@ -4,7 +4,7 @@
 # defined, because we want to reflect on type annotations and avoid forward references.
 
 from abc import abstractmethod
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from sentry.hybridcloud.rpc.services.caching import back_with_silo_cache
 from sentry.services.hybrid_cloud.auth import AuthenticationContext
@@ -140,6 +140,13 @@ class UserService(RpcService):
     @rpc_method
     @abstractmethod
     def verify_any_email(self, *, email: str) -> bool:
+        pass
+
+    @rpc_method
+    @abstractmethod
+    def verify_user_emails(
+        self, *, user_id_emails: List[Tuple[int, str]]
+    ) -> Dict[str, Dict[str, Any]]:
         pass
 
 

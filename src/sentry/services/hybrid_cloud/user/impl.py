@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Callable, List, MutableMapping, Optional
+from typing import Any, Callable, Dict, List, MutableMapping, Optional, Tuple
 from uuid import uuid4
 
 from django.db import router, transaction
@@ -217,6 +217,18 @@ class DatabaseBackedUserService(UserService):
             user_email.update(is_verified=True)
             return True
         return False
+
+    def verify_user_emails(
+        self, *, user_id_emails: List[Tuple[int, str]]
+    ) -> Dict[str, Dict[str, Any]]:
+        results = {}
+        for user_id, email in user_id_emails:
+            exists = UserEmail.objects.filter(user_id=user_id, email__iexact=email).exists()
+            results[user_id] = {
+                "email": email,
+                "exists": exists,
+            }
+        return results
 
     class _UserFilterQuery(
         FilterQueryDatabaseImpl[User, UserFilterArgs, RpcUser, UserSerializeType],
