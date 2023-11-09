@@ -5,6 +5,7 @@ from sentry.models.group import Group, get_group_with_redirect
 from sentry.models.project import Project
 from sentry.utils.eventuser import EventUser
 
+
 from ..base import ExportError
 
 

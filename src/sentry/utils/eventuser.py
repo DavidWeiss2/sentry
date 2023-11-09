@@ -96,6 +96,9 @@ class EventUser:
         Fetch the EventUser with a Snuba query that exists within a list of projects
         and valid `keyword_filters`. The `keyword_filter` keys are in `KEYWORD_MAP`.
         """
+        if not len(projects):
+            return []
+
         oldest_project = min(projects, key=lambda item: item.date_added)
 
         where_conditions = [
