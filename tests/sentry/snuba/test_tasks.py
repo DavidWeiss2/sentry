@@ -294,10 +294,6 @@ class DeleteSubscriptionFromSnubaTest(BaseSnubaTaskTest):
         assert not QuerySubscription.objects.filter(id=sub.id).exists()
 
 
-# Need to add a test to check the query produces right conditions, and also that successfully sends the query to snuba.
-# Probably also worth adding one for validation checks in the api
-
-
 class BuildSnqlQueryTest(TestCase):
     aggregate_mappings: dict[SnubaQuery.Type, dict[Dataset, dict[str, Any]]] = {
         SnubaQuery.Type.ERROR: {
